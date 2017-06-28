@@ -433,11 +433,12 @@ func (ng *Engine) execEvalStmt(ctx context.Context, query *query, s *EvalStmt) (
 		evalTimer.Stop()
 		return val, nil
 	}
-
 	numSteps := int(s.End.Sub(s.Start) / s.Interval)
+
 	// Range evaluation.
 	sampleStreams := map[model.Fingerprint]*sampleStream{}
 	for ts := s.Start; !ts.After(s.End); ts = ts.Add(s.Interval) {
+
 		if err := contextDone(ctx, "range evaluation"); err != nil {
 			return nil, err
 		}
@@ -445,7 +446,6 @@ func (ng *Engine) execEvalStmt(ctx context.Context, query *query, s *EvalStmt) (
 		evaluator := &evaluator{
 			Timestamp: ts,
 			ctx:       ctx,
-			Interval:  s.Interval,
 		}
 		val, err := evaluator.Eval(s.Expr)
 		if err != nil {
@@ -521,13 +521,14 @@ func (ng *Engine) populateIterators(ctx context.Context, querier local.Querier, 
 				n.iterators, queryErr = querier.QueryInstant(
 					ctx,
 					s.Start.Add(-n.Offset),
+					StalenessDelta,
 					n.LabelMatchers...,
 				)
 			} else {
 				n.iterators, queryErr = querier.QueryRange(
 					ctx,
-					s.Start.Add(-n.Offset-s.Interval),
-					s.End.Add(-n.Offset+s.Interval),
+					s.Start.Add(-n.Offset-StalenessDelta),
+					s.End.Add(-n.Offset),
 					n.LabelMatchers...,
 				)
 			}
@@ -538,6 +539,7 @@ func (ng *Engine) populateIterators(ctx context.Context, querier local.Querier, 
 			if n.Range < s.Interval {
 				n.Range = s.Interval
 			}
+
 			n.iterators, queryErr = querier.QueryRange(
 				ctx,
 				s.Start.Add(-n.Offset-n.Range),
@@ -576,7 +578,6 @@ type evaluator struct {
 	ctx context.Context
 
 	Timestamp model.Time
-	Interval  time.Duration
 }
 
 // fatalf causes a panic with the input formatted into an error.
@@ -758,11 +759,10 @@ func (ev *evaluator) eval(expr Expr) model.Value {
 // vectorSelector evaluates a *VectorSelector expression.
 func (ev *evaluator) vectorSelector(node *VectorSelector) vector {
 	vec := vector{}
-
 	for _, it := range node.iterators {
 		refTime := ev.Timestamp.Add(-node.Offset)
 		samplePair := it.ValueAtOrBeforeTime(refTime)
-		if samplePair.Timestamp.Before(refTime.Add(-ev.Interval)) {
+		if samplePair.Timestamp.Before(refTime.Add(-StalenessDelta)) {
 			continue // Sample outside of staleness policy window.
 		}
 		vec = append(vec, &sample{
@@ -776,9 +776,6 @@ func (ev *evaluator) vectorSelector(node *VectorSelector) vector {
 
 // matrixSelector evaluates a *MatrixSelector expression.
 func (ev *evaluator) matrixSelector(node *MatrixSelector) matrix {
-	if node.Range < 3*ev.Interval {
-		node.Range = 3 * ev.Interval
-	}
 	interval := metric.Interval{
 		OldestInclusive: ev.Timestamp.Add(-node.Range - node.Offset),
 		NewestInclusive: ev.Timestamp.Add(-node.Offset),

@@ -644,19 +644,20 @@ func (it *memorySeriesIterator) ValueAtOrAfterTime(t model.Time) model.SamplePai
 func (it *memorySeriesIterator) RangeValues(in metric.Interval) []model.SamplePair {
 	// Find the first chunk for which the first sample is within the interval.
 	i := sort.Search(len(it.chunks), func(i int) bool {
-		return !it.chunks[i].FirstTime().Before(in.OldestInclusive)
+		return it.chunks[i].FirstTime().After(in.OldestInclusive)
 	})
 	// Only now check the last timestamp of the previous chunk (which is
 	// fairly expensive).
 	if i > 0 {
-		lt, err := it.chunkIterator(i - 1).LastTimestamp()
-		if err != nil {
-			it.quarantine(err)
-			return nil
-		}
-		if !lt.Before(in.OldestInclusive) {
-			i--
-		}
+		// lt, err := it.chunkIterator(i - 1).LastTimestamp()
+		// if err != nil {
+		// 	it.quarantine(err)
+		// 	return nil
+		// }
+		// if !lt.Before(in.OldestInclusive) {
+		// 	i--
+		// }
+		i--
 	}
 
 	values := []model.SamplePair{}

@@ -1,0 +1,487 @@
+#########################
+# ceph_osd_osd_op_write #
+#########################
+ceph_osd_op_write_count_ps=irate(ceph_osd_osd_op_write_count_total[5s])
+ceph_osd_op_write_latency_ms=irate(ceph_osd_osd_op_write_latency_ms_total[5s])/ceph_osd_op_write_count_ps
+ceph_cluster_osd_op_write_latency_ms_avg=avg(ceph_osd_op_write_latency_ms) by (cluster)
+ceph_cluster_osd_op_write_latency_ms_min=min(ceph_osd_op_write_latency_ms) by (cluster)
+ceph_cluster_osd_op_write_latency_ms_max=max(ceph_osd_op_write_latency_ms) by (cluster)
+ceph_cluster_osd_op_write_count_ps_avg=avg(ceph_osd_op_write_count_ps) by (cluster)
+ceph_cluster_osd_op_write_count_ps_min=min(ceph_osd_op_write_count_ps) by (cluster)
+ceph_cluster_osd_op_write_count_ps_max=max(ceph_osd_op_write_count_ps) by (cluster)
+ceph_cluster_osd_op_write_count_ps_sum=sum(ceph_osd_op_write_count_ps) by (cluster)
+# top10
+ceph_cluster_osd_op_write_latency_ms_top10=topk(10,ceph_osd_op_write_latency_ms) by (cluster)
+ceph_cluster_osd_op_write_count_ps_top10=topk(10,ceph_osd_op_write_count_ps) by (cluster)
+#################################
+# ceph_osd_osd_op_write_prepare #
+#################################
+ceph_osd_op_write_prepare_count_ps=irate(ceph_osd_osd_op_write_prepare_count_total[5s])
+ceph_osd_op_write_prepare_latency_ms=irate(ceph_osd_osd_op_write_prepare_latency_ms_total[5s])/ceph_osd_op_write_prepare_count_ps
+ceph_cluster_osd_op_write_prepare_latency_ms_avg=avg(ceph_osd_op_write_prepare_latency_ms) by (cluster)
+ceph_cluster_osd_op_write_prepare_latency_ms_min=min(ceph_osd_op_write_prepare_latency_ms) by (cluster)
+ceph_cluster_osd_op_write_prepare_latency_ms_max=max(ceph_osd_op_write_prepare_latency_ms) by (cluster)
+ceph_cluster_osd_op_write_prepare_count_ps_avg=avg(ceph_osd_op_write_prepare_count_ps) by (cluster)
+ceph_cluster_osd_op_write_prepare_count_ps_min=min(ceph_osd_op_write_prepare_count_ps) by (cluster)
+ceph_cluster_osd_op_write_prepare_count_ps_max=max(ceph_osd_op_write_prepare_count_ps) by (cluster)
+ceph_cluster_osd_op_write_prepare_count_ps_sum=sum(ceph_osd_op_write_prepare_count_ps) by (cluster)
+# top10
+ceph_cluster_osd_op_write_prepare_latency_ms_top10=topk(10,ceph_osd_op_write_prepare_latency_ms) by (cluster)
+ceph_cluster_osd_op_write_prepare_count_ps_top10=topk(10,ceph_osd_op_write_prepare_count_ps) by (cluster)
+#################################
+# ceph_osd_osd_op_write_process #
+#################################
+ceph_osd_op_write_process_count_ps=irate(ceph_osd_osd_op_write_process_count_total[5s])
+ceph_osd_op_write_process_latency_ms=irate(ceph_osd_osd_op_write_process_latency_ms_total[5s])/ceph_osd_op_write_process_count_ps
+ceph_cluster_osd_op_write_process_latency_ms_avg=avg(ceph_osd_op_write_process_latency_ms) by (cluster)
+ceph_cluster_osd_op_write_process_latency_ms_min=min(ceph_osd_op_write_process_latency_ms) by (cluster)
+ceph_cluster_osd_op_write_process_latency_ms_max=max(ceph_osd_op_write_process_latency_ms) by (cluster)
+ceph_cluster_osd_op_write_process_count_ps_avg=avg(ceph_osd_op_write_process_count_ps) by (cluster)
+ceph_cluster_osd_op_write_process_count_ps_min=min(ceph_osd_op_write_process_count_ps) by (cluster)
+ceph_cluster_osd_op_write_process_count_ps_max=max(ceph_osd_op_write_process_count_ps) by (cluster)
+ceph_cluster_osd_op_write_process_count_ps_sum=sum(ceph_osd_op_write_process_count_ps) by (cluster)
+# top10
+ceph_cluster_osd_op_write_process_latency_ms_top10=topk(10,ceph_osd_op_write_process_latency_ms) by (cluster)
+ceph_cluster_osd_op_write_prepare_count_ps_top10=topk(10,ceph_osd_op_write_prepare_count_ps) by (cluster)
+##################################
+# ceph_osd_osd_op_write_in_bytes #
+##################################
+ceph_osd_op_write_bps=irate(ceph_osd_osd_op_write_in_bytes[5s])
+ceph_cluster_osd_op_write_bps_sum=sum(ceph_osd_op_write_bps) by (cluster)
+ceph_cluster_osd_op_write_bps_avg=avg(ceph_osd_op_write_bps) by (cluster)
+ceph_cluster_osd_op_write_bps_min=min(ceph_osd_op_write_bps) by (cluster)
+ceph_cluster_osd_op_write_bps_max=max(ceph_osd_op_write_bps) by (cluster)
+# top10
+ceph_cluster_osd_op_write_bps_top10=topk(10,ceph_osd_op_write_bps) by (cluster)
+########################
+# ceph_osd_osd_op_read #
+########################
+ceph_osd_op_read_count_ps=irate(ceph_osd_osd_op_read_count_total[5s])
+ceph_osd_op_read_latency_ms=irate(ceph_osd_osd_op_read_latency_ms_total[5s])/ceph_osd_op_read_count_ps
+ceph_cluster_osd_op_read_latency_ms_avg=avg(ceph_osd_op_read_latency_ms) by (cluster)
+ceph_cluster_osd_op_read_latency_ms_min=min(ceph_osd_op_read_latency_ms) by (cluster)
+ceph_cluster_osd_op_read_latency_ms_max=max(ceph_osd_op_read_latency_ms) by (cluster)
+ceph_cluster_osd_op_read_count_ps_avg=avg(ceph_osd_op_read_count_ps) by (cluster)
+ceph_cluster_osd_op_read_count_ps_min=min(ceph_osd_op_read_count_ps) by (cluster)
+ceph_cluster_osd_op_read_count_ps_max=max(ceph_osd_op_read_count_ps) by (cluster)
+ceph_cluster_osd_op_read_count_ps_sum=sum(ceph_osd_op_read_count_ps) by (cluster)
+# top10
+ceph_cluster_osd_op_read_count_ps_top10=topk(10,ceph_osd_op_read_count_ps) by (cluster)
+ceph_cluster_osd_op_read_latency_ms_top10=topk(10,ceph_osd_op_read_latency_ms) by (cluster)
+############################
+# ceph_osd_op_read_prepare #
+############################
+ceph_osd_op_read_prepare_count_ps=irate(ceph_osd_osd_op_read_prepare_count_total[5s])
+ceph_osd_op_read_prepare_latency_ms=irate(ceph_osd_osd_op_read_prepare_latency_ms_total[5s])/ceph_osd_op_read_prepare_count_ps
+ceph_cluster_osd_op_read_prepare_latency_ms_avg=avg(ceph_osd_op_read_prepare_latency_ms) by (cluster)
+ceph_cluster_osd_op_read_prepare_latency_ms_min=min(ceph_osd_op_read_prepare_latency_ms) by (cluster)
+ceph_cluster_osd_op_read_prepare_latency_ms_max=max(ceph_osd_op_read_prepare_latency_ms) by (cluster)
+ceph_cluster_osd_op_read_prepare_count_ps_avg=avg(ceph_osd_op_read_prepare_count_ps) by (cluster)
+ceph_cluster_osd_op_read_prepare_count_ps_min=min(ceph_osd_op_read_prepare_count_ps) by (cluster)
+ceph_cluster_osd_op_read_prepare_count_ps_max=max(ceph_osd_op_read_prepare_count_ps) by (cluster)
+ceph_cluster_osd_op_read_prepare_count_ps_sum=sum(ceph_osd_op_read_prepare_count_ps) by (cluster)
+# top10
+ceph_cluster_osd_op_read_prepare_latency_ms_top10=topk(10,ceph_osd_op_read_prepare_latency_ms) by (cluster)
+ceph_cluster_osd_op_read_prepare_count_ps_top10=topk(10,ceph_osd_op_read_prepare_count_ps) by (cluster)
+############################
+# ceph_osd_op_read_process #
+############################
+ceph_osd_op_read_process_count_ps=irate(ceph_osd_osd_op_read_process_count_total[5s])
+ceph_osd_op_read_process_latency_ms=irate(ceph_osd_osd_op_read_process_latency_ms_total[5s])/ceph_osd_op_read_process_count_ps
+ceph_cluster_osd_op_read_process_latency_ms_avg=avg(ceph_osd_op_read_process_latency_ms) by (cluster)
+ceph_cluster_osd_op_read_process_latency_ms_min=min(ceph_osd_op_read_process_latency_ms) by (cluster)
+ceph_cluster_osd_op_read_process_latency_ms_max=max(ceph_osd_op_read_process_latency_ms) by (cluster)
+ceph_cluster_osd_op_read_process_count_ps_avg=avg(ceph_osd_op_read_process_count_ps) by (cluster)
+ceph_cluster_osd_op_read_process_count_ps_min=min(ceph_osd_op_read_process_count_ps) by (cluster)
+ceph_cluster_osd_op_read_process_count_ps_max=max(ceph_osd_op_read_process_count_ps) by (cluster)
+ceph_cluster_osd_op_read_process_count_ps_sum=sum(ceph_osd_op_read_process_count_ps) by (cluster)
+# top10
+ceph_cluster_osd_op_read_process_latency_ms_top10=topk(10,ceph_osd_op_read_process_latency_ms) by (cluster)
+ceph_cluster_osd_op_read_process_count_ps_top10=topk(10,ceph_osd_op_read_process_count_ps) by (cluster)
+##################################
+# ceph_osd_osd_op_read_out_bytes #
+##################################
+ceph_osd_op_read_bps=irate(ceph_osd_osd_op_read_out_bytes[5s])
+ceph_cluster_osd_op_read_bps_sum=sum(ceph_osd_op_read_bps) by (cluster)
+ceph_cluster_osd_op_read_bps_avg=avg(ceph_osd_op_read_bps) by (cluster)
+ceph_cluster_osd_op_read_bps_min=min(ceph_osd_op_read_bps) by (cluster)
+ceph_cluster_osd_op_read_bps_max=max(ceph_osd_op_read_bps) by (cluster)
+# top10
+ceph_cluster_osd_op_read_bps_top10=topk(10,ceph_osd_op_read_bps) by (cluster)
+############################
+# ceph_osd_filestore_apply #
+############################
+ceph_osd_filestore_apply_count_ps=irate(ceph_osd_filestore_apply_count_total[5s])
+ceph_osd_filestore_apply_latency_ms=irate(ceph_osd_filestore_apply_latency_ms_total[5s])/ceph_osd_filestore_apply_count_ps
+ceph_cluster_osd_filestore_apply_latency_ms_avg=avg(ceph_osd_filestore_apply_latency_ms) by (cluster)
+ceph_cluster_osd_filestore_apply_latency_ms_min=min(ceph_osd_filestore_apply_latency_ms) by (cluster)
+ceph_cluster_osd_filestore_apply_latency_ms_max=max(ceph_osd_filestore_apply_latency_ms) by (cluster)
+# top10
+ceph_cluster_osd_filestore_apply_latency_ms_top10=topk(10,ceph_osd_filestore_apply_latency_ms) by (cluster)
+#########################
+# filestore_commitcycle #
+#########################
+ceph_osd_filestore_commitcycle_count_ps=irate(ceph_osd_filestore_commitcycle_count_total[5s])
+ceph_osd_filestore_commitcycle_latency_ms=irate(ceph_osd_filestore_commitcycle_latency_ms_total[5s])/ceph_osd_filestore_commitcycle_count_ps
+ceph_cluster_osd_filestore_commitcycle_latency_ms_avg=avg(ceph_osd_filestore_commitcycle_latency_ms) by (cluster)
+ceph_cluster_osd_filestore_commitcycle_latency_ms_max=max(ceph_osd_filestore_commitcycle_latency_ms) by (cluster)
+ceph_cluster_osd_filestore_commitcycle_latency_ms_min=min(ceph_osd_filestore_commitcycle_latency_ms) by (cluster)
+ceph_cluster_osd_filestore_commitcycle_count_ps_avg=avg(ceph_osd_filestore_commitcycle_count_ps) by (cluster)
+ceph_cluster_osd_filestore_commitcycle_count_ps_max=max(ceph_osd_filestore_commitcycle_count_ps) by (cluster)
+ceph_cluster_osd_filestore_commitcycle_count_ps_min=min(ceph_osd_filestore_commitcycle_count_ps) by (cluster)
+ceph_cluster_osd_filestore_commitcycle_count_ps_sum=sum(ceph_osd_filestore_commitcycle_count_ps) by (cluster)
+# top10
+ceph_cluster_osd_filestore_commitcycle_latency_ms_top10=topk(10,ceph_osd_filestore_commitcycle_latency_ms) by (cluster)
+ceph_cluster_osd_filestore_commitcycle_count_ps_top10=topk(10,ceph_osd_filestore_commitcycle_count_ps) by (cluster)
+##################################
+# filestore_commitcycle_interval # 
+##################################
+ceph_osd_filestore_commitcycle_interval_ms=irate(ceph_osd_filestore_commitcycle_interval_total[5s])/ceph_osd_filestore_commitcycle_count_ps
+ceph_cluster_osd_filestore_commitcycle_interval_ms_avg=avg(ceph_osd_filestore_commitcycle_interval_ms) by (cluster)
+ceph_cluster_osd_filestore_commitcycle_interval_ms_max=max(ceph_osd_filestore_commitcycle_interval_ms) by (cluster)
+ceph_cluster_osd_filestore_commitcycle_interval_ms_min=min(ceph_osd_filestore_commitcycle_interval_ms) by (cluster)
+ceph_cluster_osd_filestore_commitcycle_interval_ms_top10=topk(10,ceph_osd_filestore_commitcycle_interval_ms) by (cluster)
+#################################
+# ceph_osd_filestore_journal_wr #
+#################################
+ceph_osd_filestore_journal_wr_count_ps=irate(ceph_osd_filestore_journal_wr_bytes_count_total[5s])
+ceph_osd_filestore_journal_wr_bps=irate(ceph_osd_filestore_journal_wr_bytes_total[5s])
+ceph_osd_filestore_journal_wr_bytes_per_count=ceph_osd_filestore_journal_wr_bps/ceph_osd_filestore_journal_wr_count_ps
+ceph_cluster_osd_filestore_journal_wr_bytes_per_count_avg=avg(ceph_osd_filestore_journal_wr_bytes_per_count) by (cluster)
+ceph_cluster_osd_filestore_journal_wr_bytes_per_count_min=min(ceph_osd_filestore_journal_wr_bytes_per_count) by (cluster)
+ceph_cluster_osd_filestore_journal_wr_bytes_per_count_max=max(ceph_osd_filestore_journal_wr_bytes_per_count) by (cluster)
+ceph_cluster_osd_filestore_journal_wr_bps_avg=avg(ceph_osd_filestore_journal_wr_bps) by (cluster)
+ceph_cluster_osd_filestore_journal_wr_bps_min=min(ceph_osd_filestore_journal_wr_bps) by (cluster)
+ceph_cluster_osd_filestore_journal_wr_bps_max=max(ceph_osd_filestore_journal_wr_bps) by (cluster)
+ceph_cluster_osd_filestore_journal_wr_count_ps_avg=avg(ceph_osd_filestore_journal_wr_count_ps) by (cluster)
+ceph_cluster_osd_filestore_journal_wr_count_ps_min=min(ceph_osd_filestore_journal_wr_count_ps) by (cluster)
+ceph_cluster_osd_filestore_journal_wr_count_ps_max=max(ceph_osd_filestore_journal_wr_count_ps) by (cluster)
+ceph_cluster_osd_filestore_journal_wr_count_ps_sum=sum(ceph_osd_filestore_journal_wr_count_ps) by (cluster)
+# top10
+ceph_cluster_osd_filestore_journal_wr_bytes_per_count_top10=topk(10,ceph_osd_filestore_journal_wr_bytes_per_count) by (cluster)
+ceph_cluster_osd_filestore_journal_wr_bps_top10=topk(10,ceph_osd_filestore_journal_wr_bps) by (cluster)
+ceph_cluster_osd_filestore_journal_wr_count_ps_top10=topk(10,ceph_osd_filestore_journal_wr_count_ps) by (cluster)
+##############################
+# ceph_osd_filestore_journal #
+##############################
+ceph_osd_filestore_journal_count_ps=irate(ceph_osd_filestore_journal_count_total[5s])
+ceph_osd_filestore_journal_latency_ms=irate(ceph_osd_filestore_journal_latency_ms_total[5s])/ceph_osd_filestore_journal_count_ps
+ceph_cluster_osd_filestore_journal_bytes_sum=sum(ceph_osd_filestore_journal_bytes) by (cluster)
+ceph_cluster_osd_filestore_journal_bytes_avg=avg(ceph_osd_filestore_journal_bytes) by (cluster)
+ceph_cluster_osd_filestore_journal_bytes_min=min(ceph_osd_filestore_journal_bytes) by (cluster)
+ceph_cluster_osd_filestore_journal_bytes_max=max(ceph_osd_filestore_journal_bytes) by (cluster)
+ceph_cluster_osd_filestore_journal_count_ps_avg=avg(ceph_osd_filestore_journal_count_ps) by (cluster)
+ceph_cluster_osd_filestore_journal_count_ps_min=min(ceph_osd_filestore_journal_count_ps) by (cluster)
+ceph_cluster_osd_filestore_journal_count_ps_max=max(ceph_osd_filestore_journal_count_ps) by (cluster)
+ceph_cluster_osd_filestore_journal_count_ps_sum=sum(ceph_osd_filestore_journal_count_ps) by (cluster)
+ceph_cluster_osd_filestore_journal_latency_ms_avg=avg(ceph_osd_filestore_journal_latency_ms) by (cluster)
+ceph_cluster_osd_filestore_journal_latency_ms_min=min(ceph_osd_filestore_journal_latency_ms) by (cluster)
+ceph_cluster_osd_filestore_journal_latency_ms_max=max(ceph_osd_filestore_journal_latency_ms) by (cluster)
+# top 10
+ceph_cluster_osd_filestore_journal_bytes_top10=topk(10,ceph_osd_filestore_journal_bytes) by (cluster)
+ceph_cluster_osd_filestore_journal_count_ps_top10=topk(10,ceph_osd_filestore_journal_count_ps) by (cluster)
+ceph_cluster_osd_filestore_journal_latency_ms_top10=topk(10,ceph_osd_filestore_journal_latency_ms) by (cluster)
+#########################################
+# ceph_osd_filestore_journalqueue_bytes #
+#########################################
+ceph_cluster_osd_filestore_journalqueue_bytes_sum=sum(ceph_osd_filestore_journalqueue_bytes) by (cluster)
+ceph_cluster_osd_filestore_journalqueue_bytes_avg=avg(ceph_osd_filestore_journalqueue_bytes) by (cluster)
+ceph_cluster_osd_filestore_journalqueue_bytes_min=min(ceph_osd_filestore_journalqueue_bytes) by (cluster)
+ceph_cluster_osd_filestore_journalqueue_bytes_max=max(ceph_osd_filestore_journalqueue_bytes) by (cluster)
+ceph_cluster_osd_filestore_journalqueue_ops_count_max=max(ceph_osd_filestore_journalqueue_ops_count) by (cluster)
+ceph_cluster_osd_filestore_journalqueue_ops_count_sum=sum(ceph_osd_filestore_journalqueue_ops_count) by (cluster)
+ceph_cluster_osd_filestore_journalqueue_ops_count_min=min(ceph_osd_filestore_journalqueue_ops_count) by (cluster)
+ceph_cluster_osd_filestore_journalqueue_ops_count_avg=avg(ceph_osd_filestore_journalqueue_ops_count) by (cluster)
+# top10
+ceph_cluster_osd_filestore_journalqueue_bytes_top10=topk(10,ceph_osd_filestore_journalqueue_bytes) by (cluster)
+ceph_cluster_osd_filestore_journalqueue_ops_count_top10=topk(10,ceph_osd_filestore_journalqueue_ops_count) by (cluster)
+##################################
+# ceph_osd_filestore_journal_ops #
+##################################
+ceph_cluster_osd_filestore_journal_ops_count_max=max(ceph_osd_filestore_journal_ops_count) by (cluster)
+ceph_cluster_osd_filestore_journal_ops_count_sum=sum(ceph_osd_filestore_journal_ops_count) by (cluster)
+ceph_cluster_osd_filestore_journal_ops_count_min=min(ceph_osd_filestore_journal_ops_count) by (cluster)
+ceph_cluster_osd_filestore_journal_ops_count_avg=avg(ceph_osd_filestore_journal_ops_count) by (cluster)
+# top10
+ceph_cluster_osd_filestore_journal_ops_count_ps_top10=topk(10,ceph_osd_filestore_journal_ops_count_ps) by (cluster)
+###################################################
+# ceph_osd_filestore_finisher_journal_objectstore #
+###################################################
+ceph_osd_filestore_finisher_journal_objectstore_count_ps=irate(ceph_osd_filestore_finisher_journal_objectstroe_count_total[5s])
+ceph_osd_filestore_finisher_journal_objectstore_latency_ms=irate(ceph_osd_filestore_finisher_journal_objectstroe_latency_ms_total[5s])/ceph_osd_filestore_finisher_journal_objectstore_count_ps
+ceph_cluster_osd_filestore_finisher_journal_objectstore_count_ps_avg=avg(ceph_osd_filestore_finisher_journal_objectstore_count_ps) by (cluster)
+ceph_cluster_osd_filestore_finisher_journal_objectstore_count_ps_max=max(ceph_osd_filestore_finisher_journal_objectstore_count_ps) by (cluster)
+ceph_cluster_osd_filestore_finisher_journal_objectstore_count_ps_min=min(ceph_osd_filestore_finisher_journal_objectstore_count_ps) by (cluster)
+ceph_cluster_osd_filestore_finisher_journal_objectstore_count_ps_sum=sum(ceph_osd_filestore_finisher_journal_objectstore_count_ps) by (cluster)
+ceph_cluster_osd_filestore_finisher_journal_objectstore_latency_ms_avg=avg(ceph_osd_filestore_finisher_journal_objectstore_latency_ms) by (cluster)
+ceph_cluster_osd_filestore_finisher_journal_objectstore_latency_ms_min=min(ceph_osd_filestore_finisher_journal_objectstore_latency_ms) by (cluster)
+ceph_cluster_osd_filestore_finisher_journal_objectstore_latency_ms_max=max(ceph_osd_filestore_finisher_journal_objectstore_latency_ms) by (cluster)
+# top 10
+ceph_cluster_osd_filestore_finisher_journal_objectstore_latency_ms_top10=topk(10,ceph_osd_filestore_finisher_journal_objectstore_latency_ms) by (cluster)
+ceph_cluster_osd_filestore_finisher_journal_objectstore_count_ps_top10=topk(10,ceph_osd_filestore_finisher_journal_objectstore_count_ps) by (cluster)
+###########################
+# ceph_osd_leveldb_submit #
+###########################
+ceph_osd_leveldb_submit_count_ps=irate(ceph_osd_leveldb_submit_count_total[5s])
+ceph_osd_leveldb_submit_latency_ms=irate(ceph_osd_leveldb_submit_latency_ms_total[5s])/irate(ceph_osd_leveldb_submit_count_total[5s])
+ceph_cluster_osd_lelveldb_submit_count_ps_avg=avg(ceph_osd_leveldb_submit_count_ps) by (cluster)
+ceph_cluster_osd_lelveldb_submit_count_ps_max=max(ceph_osd_leveldb_submit_count_ps) by (cluster)
+ceph_cluster_osd_lelveldb_submit_count_ps_min=min(ceph_osd_leveldb_submit_count_ps) by (cluster)
+ceph_cluster_osd_lelveldb_submit_count_ps_sum=sum(ceph_osd_leveldb_submit_count_ps) by (cluster)
+ceph_cluster_osd_leveldb_submit_latency_ms_avg=avg(ceph_osd_leveldb_submit_latency_ms) by (cluster)
+ceph_cluster_osd_leveldb_submit_latency_ms_min=min(ceph_osd_leveldb_submit_latency_ms) by (cluster)
+ceph_cluster_osd_leveldb_submit_latency_ms_max=max(ceph_osd_leveldb_submit_latency_ms) by (cluster)
+# top10
+ceph_cluster_osd_lelveldb_submit_count_ps_top10=topk(10,ceph_osd_leveldb_submit_count_ps) by (cluster)
+ceph_cluster_osd_leveldb_submit_latency_ms_top10=topk(10,ceph_osd_leveldb_submit_latency_ms) by (cluster)
+################################
+# ceph_osd_leveldb_submit_sync #
+################################
+ceph_osd_leveldb_submit_sync_count_ps=irate(ceph_osd_leveldb_submit_sync_count_total[5s])
+ceph_osd_leveldb_submit_sync_latency_ms=irate(ceph_osd_leveldb_submit_sync_latency_ms_total[5s])/ceph_osd_leveldb_submit_sync_count_ps
+ceph_cluster_osd_leveldb_submit_sync_count_ps_avg=avg(ceph_osd_leveldb_submit_sync_count_ps) by (cluster)
+ceph_cluster_osd_leveldb_submit_sync_count_ps_min=min(ceph_osd_leveldb_submit_sync_count_ps) by (cluster)
+ceph_cluster_osd_leveldb_submit_sync_count_ps_max=max(ceph_osd_leveldb_submit_sync_count_ps) by (cluster)
+ceph_cluster_osd_leveldb_submit_sync_count_ps_sum=sum(ceph_osd_leveldb_submit_sync_count_ps) by (cluster)
+ceph_cluster_osd_leveldb_submit_sync_latency_ms_avg=avg(ceph_osd_leveldb_submit_sync_latency_ms) by (cluster)
+ceph_cluster_osd_leveldb_submit_sync_latency_ms_min=min(ceph_osd_leveldb_submit_sync_latency_ms) by (cluster)
+ceph_cluster_osd_leveldb_submit_sync_latency_ms_max=max(ceph_osd_leveldb_submit_sync_latency_ms) by (cluster)
+# top10
+ceph_cluster_osd_leveldb_submit_sync_count_ps_top10=topk(10,ceph_osd_leveldb_submit_sync_count_ps) by (cluster)
+ceph_cluster_osd_leveldb_submit_sync_latency_ms_top10=topk(10,ceph_osd_leveldb_submit_sync_latency_ms) by (cluster)
+########################################
+# ceph_osd_filestore_queue_transaction #
+########################################
+ceph_osd_filestore_queue_transaction_count_ps=irate(ceph_osd_filestore_queue_transaction_count_total[5s])
+ceph_osd_filestore_queue_transaction_latency_ms=irate(ceph_osd_filestore_queue_transaction_latency_ms_total[5s])/ceph_osd_filestore_queue_transaction_count_ps
+ceph_cluster_osd_filestore_queue_transaction_count_ps_avg=avg(ceph_osd_filestore_queue_transaction_count_ps) by (cluster)
+ceph_cluster_osd_filestore_queue_transaction_count_ps_max=max(ceph_osd_filestore_queue_transaction_count_ps) by (cluster)
+ceph_cluster_osd_filestore_queue_transaction_count_ps_min=min(ceph_osd_filestore_queue_transaction_count_ps) by (cluster)
+ceph_cluster_osd_filestore_queue_transaction_count_ps_sum=sum(ceph_osd_filestore_queue_transaction_count_ps) by (cluster)
+ceph_cluster_osd_filestore_queue_transaction_latency_ms_avg=avg(ceph_osd_filestore_queue_transaction_latency_ms) by (cluster)
+ceph_cluster_osd_filestore_queue_transaction_latency_ms_min=min(ceph_osd_filestore_queue_transaction_latency_ms) by (cluster)
+ceph_cluster_osd_filestore_queue_transaction_latency_ms_max=max(ceph_osd_filestore_queue_transaction_latency_ms) by (cluster)
+# top10
+ceph_cluster_osd_filestore_queue_transaction_count_ps_top10=topk(10,ceph_osd_filestore_queue_transaction_count_ps) by (cluster)
+ceph_cluster_osd_filestore_queue_transaction_latency_ms_top10=topk(10,ceph_osd_filestore_queue_transaction_latency_ms) by (cluster)
+######################################
+# ceph_osd_leveldb_transaction_count #
+######################################
+ceph_osd_leveldb_transaction_count_ps=irate(ceph_osd_leveldb_transaction_count_total[5s])
+ceph_cluster_osd_leveldb_transaction_count_ps_avg=avg(ceph_osd_leveldb_transaction_count_ps) by (cluster)
+ceph_cluster_osd_leveldb_transaction_count_ps_min=min(ceph_osd_leveldb_transaction_count_ps) by (cluster)
+ceph_cluster_osd_leveldb_transaction_count_ps_max=max(ceph_osd_leveldb_transaction_count_ps) by (cluster)
+ceph_cluster_osd_leveldb_transaction_count_ps_sum=sum(ceph_osd_leveldb_transaction_count_ps) by (cluster)
+# top10
+ceph_cluster_osd_leveldb_transaction_count_ps_top10=topk(10,ceph_osd_leveldb_transaction_count_ps) by (cluster)
+########################
+# ceph_osd_leveldb_get #
+########################
+ceph_osd_leveldb_get_count_ps=irate(ceph_osd_leveldb_get_count_total[5s])
+ceph_osd_leveldb_get_latency_ms=irate(ceph_osd_leveldb_get_latency_ms_total[5s])/ceph_osd_leveldb_get_count_ps
+ceph_cluster_osd_leveldb_get_latency_ms_avg=avg(ceph_osd_leveldb_get_latency_ms) by (cluster)
+ceph_cluster_osd_leveldb_get_latency_ms_min=min(ceph_osd_leveldb_get_latency_ms) by (cluster)
+ceph_cluster_osd_leveldb_get_latency_ms_max=max(ceph_osd_leveldb_get_latency_ms) by (cluster)
+ceph_cluster_osd_leveldb_get_count_ps_avg=avg(ceph_osd_leveldb_get_count_ps) by (cluster)
+ceph_cluster_osd_leveldb_get_count_ps_min=min(ceph_osd_leveldb_get_count_ps) by (cluster)
+ceph_cluster_osd_leveldb_get_count_ps_max=max(ceph_osd_leveldb_get_count_ps) by (cluster)
+ceph_cluster_osd_leveldb_get_count_ps_sum=sum(ceph_osd_leveldb_get_count_ps) by (cluster)
+# top10
+ceph_cluster_osd_leveldb_get_latency_ms_top10=topk(10,ceph_osd_leveldb_get_latency_ms) by (cluster)
+ceph_cluster_osd_leveldb_get_count_ps_top10=topk(10,ceph_osd_leveldb_get_count_ps) by (cluster)
+################################
+# ceph_osd_filestore_ops_count #
+################################
+ceph_osd_filestore_ops_count_ps=irate(ceph_osd_filestore_ops_count[5s])
+ceph_cluster_osd_filestore_ops_count_avg=avg(ceph_osd_filestore_ops_count_ps) by (cluster)
+ceph_cluster_osd_filestore_ops_count_max=max(ceph_osd_filestore_ops_count_ps) by (cluster)
+ceph_cluster_osd_filestore_ops_count_min=min(ceph_osd_filestore_ops_count_ps) by (cluster)
+ceph_cluster_osd_filestore_ops_count_sum=sum(ceph_osd_filestore_ops_count_ps) by (cluster)
+# top10
+ceph_cluster_osd_filestore_ops_count_top10=topk(10,ceph_osd_filestore_ops_count_ps) by (cluster)
+#############################
+# ceph_osd_filestore_ops_ps #
+#############################
+ceph_cluster_osd_filestore_ops_ps_avg=avg(ceph_osd_filestore_ops_ps) by (cluster)
+ceph_cluster_osd_filestore_ops_ps_max=max(ceph_osd_filestore_ops_ps) by (cluster)
+ceph_cluster_osd_filestore_ops_ps_min=min(ceph_osd_filestore_ops_ps) by (cluster)
+ceph_cluster_osd_filestore_ops_ps_sum=sum(ceph_osd_filestore_ops_ps) by (cluster)
+# top10
+ceph_cluster_osd_filestore_ops_ps_top10=topk(10,ceph_osd_filestore_ops_ps) by (cluster)
+###################################
+# ceph_osd_cache_tier_dirty_count #
+###################################
+ceph_osd_cache_tier_dirty_count_ps=irate(ceph_osd_cache_tier_dirty_count[5s])
+ceph_cluster_osd_cache_tier_dirty_count_ps_avg=avg(ceph_osd_cache_tier_dirty_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_dirty_count_ps_sum=sum(ceph_osd_cache_tier_dirty_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_dirty_count_ps_min=min(ceph_osd_cache_tier_dirty_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_dirty_count_ps_max=max(ceph_osd_cache_tier_dirty_count_ps) by (cluster)
+# top10
+ceph_cluster_osd_cache_tier_dirty_count_ps_top10=topk(10,ceph_osd_cache_tier_dirty_count_ps) by (cluster)
+#############################
+# ceph_osd_cache_tier_flush #
+#############################
+ceph_osd_cache_tier_flush_count_ps=irate(ceph_osd_cache_tier_flush_count_total[5s])
+ceph_osd_cache_tier_flush_latency_ms=irate(ceph_osd_cache_tier_flush_latency_ms_total[5s])/ceph_osd_cache_tier_flush_count_ps
+ceph_cluster_osd_cache_tier_flush_count_ps_avg=avg(ceph_osd_cache_tier_flush_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_flush_count_ps_min=min(ceph_osd_cache_tier_flush_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_flush_count_ps_max=max(ceph_osd_cache_tier_flush_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_flush_count_ps_sum=sum(ceph_osd_cache_tier_flush_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_flush_latency_ms_avg=avg(ceph_osd_cache_tier_flush_latency_ms) by (cluster)
+ceph_cluster_osd_cache_tier_flush_latency_ms_min=min(ceph_osd_cache_tier_flush_latency_ms) by (cluster)
+ceph_cluster_osd_cache_tier_flush_latency_ms_max=max(ceph_osd_cache_tier_flush_latency_ms) by (cluster)
+# top10
+ceph_cluster_osd_cache_tier_flush_count_ps_top10=topk(10,ceph_osd_cache_tier_flush_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_flush_latency_ms_top10=topk(10,ceph_osd_cache_tier_flush_latency_ms) by (cluster)
+###############################
+# ceph_osd_cache_tier_promote #
+###############################
+ceph_osd_cache_tier_promote_count_ps=irate(ceph_osd_cache_tier_promote_count_total[5s])
+ceph_osd_cache_tier_promote_latency_ms=irate(ceph_osd_cache_tier_promote_latency_ms_total[5s])/ceph_osd_cache_tier_promote_count_ps
+ceph_cluster_osd_cache_tier_promote_count_ps_avg=avg(ceph_osd_cache_tier_promote_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_promote_count_ps_min=min(ceph_osd_cache_tier_promote_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_promote_count_ps_max=max(ceph_osd_cache_tier_promote_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_promote_count_ps_sum=sum(ceph_osd_cache_tier_promote_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_promote_latency_ms_avg=avg(ceph_osd_cache_tier_promote_latency_ms) by (cluster)
+ceph_cluster_osd_cache_tier_promote_latency_ms_min=min(ceph_osd_cache_tier_promote_latency_ms) by (cluster)
+ceph_cluster_osd_cache_tier_promote_latency_ms_max=max(ceph_osd_cache_tier_promote_latency_ms) by (cluster)
+# top10
+ceph_cluster_osd_cache_tier_promote_count_ps_top10=topk(10,ceph_osd_cache_tier_promote_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_promote_latency_ms_top10=topk(10,ceph_osd_cache_tier_promote_latency_ms) by (cluster)
+############################
+# ceph_osd_cache_tier_read #
+############################
+ceph_osd_cache_tier_read_count_ps=irate(ceph_osd_cache_tier_read_count_total[5s])
+ceph_osd_cache_tier_read_latency_ms=irate(ceph_osd_cache_tier_read_latency_ms_total[5s])/ceph_osd_cache_tier_read_count_ps
+ceph_cluster_osd_cache_tier_read_count_ps_avg=avg(ceph_osd_cache_tier_read_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_read_count_ps_min=min(ceph_osd_cache_tier_read_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_read_count_ps_max=max(ceph_osd_cache_tier_read_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_read_count_ps_sum=sum(ceph_osd_cache_tier_read_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_read_latency_ms_avg=avg(ceph_osd_cache_tier_read_latency_ms) by (cluster)
+ceph_cluster_osd_cache_tier_read_latency_ms_min=min(ceph_osd_cache_tier_read_latency_ms) by (cluster)
+ceph_cluster_osd_cache_tier_read_latency_ms_max=max(ceph_osd_cache_tier_read_latency_ms) by (cluster)
+# top10
+ceph_cluster_osd_cache_tier_read_count_ps_top10=topk(10,ceph_osd_cache_tier_read_count_ps) by (cluster)
+ceph_cluster_osd_cache_tier_read_latency_ms_top10=topk(10,ceph_osd_cache_tier_read_latency_ms) by (cluster)
+############################################
+# ceph_osd_wbthrottle_inodes_dirtied_count #
+############################################
+ceph_osd_wbthrottle_inodes_dirtied_count_ps=irate(ceph_osd_wbthrottle_inodes_dirtied_count[5s])
+ceph_cluster_osd_wbthrottle_inodes_dirtied_count_ps_avg=avg(ceph_osd_wbthrottle_inodes_dirtied_count_ps) by (cluster)
+ceph_cluster_osd_wbthrottle_inodes_dirtied_count_ps_max=max(ceph_osd_wbthrottle_inodes_dirtied_count_ps) by (cluster)
+ceph_cluster_osd_wbthrottle_inodes_dirtied_count_ps_min=min(ceph_osd_wbthrottle_inodes_dirtied_count_ps) by (cluster)
+ceph_cluster_osd_wbthrottle_inodes_dirtied_count_ps_sum=sum(ceph_osd_wbthrottle_inodes_dirtied_count_ps) by (cluster)
+# top10
+ceph_cluster_osd_wbthrottle_inodes_dirtied_count_ps_top10=topk(10,ceph_osd_wbthrottle_inodes_dirtied_count_ps) by (cluster)
+#######################################
+# ceph_osd_wbthrottle_inodes_wb_count #
+#######################################
+ceph_osd_wbthrottle_inodes_wb_count_ps=irate(ceph_osd_wbthrottle_inodes_wb_count[5s])
+ceph_cluster_osd_wbthrottle_inodes_we_count_ps_avg=avg(ceph_osd_wbthrottle_inodes_wb_count_ps) by (cluster)
+ceph_cluster_osd_wbthrottle_inodes_we_count_ps_max=max(ceph_osd_wbthrottle_inodes_wb_count_ps) by (cluster)
+ceph_cluster_osd_wbthrottle_inodes_we_count_ps_min=min(ceph_osd_wbthrottle_inodes_wb_count_ps) by (cluster)
+ceph_cluster_osd_wbthrottle_inodes_we_count_ps_sum=sum(ceph_osd_wbthrottle_inodes_wb_count_ps) by (cluster)
+# top10
+ceph_cluster_osd_wbthrottle_inodes_wb_count_ps_top10=topk(10,ceph_osd_wbthrottle_inodes_wb_count_ps) by (cluster)
+###################################
+# ceph_osd_wbthrottle_dirtied_ios #
+###################################
+ceph_osd_wbthrottle_dirtied_ios_ps=irate(ceph_osd_wbthrottle_dirtied_ios[5s])
+ceph_cluster_osd_wbthrottle_dirtied_ios_ps_avg=avg(ceph_osd_wbthrottle_dirtied_ios_ps) by (cluster)
+ceph_cluster_osd_wbthrottle_dirtied_ios_ps_max=max(ceph_osd_wbthrottle_dirtied_ios_ps) by (cluster)
+ceph_cluster_osd_wbthrottle_dirtied_ios_ps_sum=sum(ceph_osd_wbthrottle_dirtied_ios_ps) by (cluster)
+ceph_cluster_osd_wbthrottle_dirtied_ios_ps_min=min(ceph_osd_wbthrottle_dirtied_ios_ps) by (cluster)
+# top10
+ceph_cluster_osd_wbthrottle_dirtied_ios_ps_top10=topk(10,ceph_osd_wbthrottle_dirtied_ios_ps) by (cluster)
+####################################
+# ceph_osd_wbthrottle_ios_wb_count #
+####################################
+ceph_osd_wbthrottle_ios_wb_count_ps=irate(ceph_osd_wbthrottle_ios_wb_count[5s])
+ceph_cluster_osd_wbthrottle_ios_wb_count_ps_avg=avg(ceph_osd_wbthrottle_ios_wb_count_ps) by (cluster)
+ceph_cluster_osd_wbthrottle_ios_wb_count_ps_max=max(ceph_osd_wbthrottle_ios_wb_count_ps) by (cluster)
+ceph_cluster_osd_wbthrottle_ios_wb_count_ps_min=min(ceph_osd_wbthrottle_ios_wb_count_ps) by (cluster)
+ceph_cluster_osd_wbthrottle_ios_wb_count_ps_sum=sum(ceph_osd_wbthrottle_ios_wb_count_ps) by (cluster)
+# top10
+ceph_cluster_osd_wbthrottle_ios_wb_count_ps_top10=topk(10,ceph_osd_wbthrottle_ios_wb_count_ps) by (cluster)
+########################################
+# ceph_osd_filestore_opqueue_ops_count #
+########################################
+ceph_cluster_osd_filestore_opqueue_ops_count_max=max(ceph_osd_filestore_opqueue_ops_count) by (cluster)
+ceph_cluster_osd_filestore_opqueue_ops_count_sum=sum(ceph_osd_filestore_opqueue_ops_count) by (cluster)
+ceph_cluster_osd_filestore_opqueue_ops_count_min=min(ceph_osd_filestore_opqueue_ops_count) by (cluster)
+ceph_cluster_osd_filestore_opqueue_ops_count_avg=avg(ceph_osd_filestore_opqueue_ops_count) by (cluster)
+# top10
+ceph_cluster_osd_filestore_opqueue_ops_count_ps_top10=topk(10,ceph_osd_filestore_opqueue_ops_count_ps) by (cluster)
+################################
+# ceph_osd_perf_commit_latency #
+################################
+ceph_cluster_osd_commit_latency_sec_avg=avg(ceph_osd_perf_commit_latency_seconds) by (cluster)
+ceph_cluster_osd_commit_latency_sec_min=min(ceph_osd_perf_commit_latency_seconds) by (cluster)
+ceph_cluster_osd_commit_latency_sec_max=max(ceph_osd_perf_commit_latency_seconds) by (cluster)
+# top10
+ceph_cluster_osd_perf_commit_latency_seconds_top10=topk(10,ceph_osd_perf_commit_latency_seconds) by (cluster)
+###############################
+# ceph_osd_perf_apply_latency #
+###############################
+ceph_cluster_osd_apply_latency_sec_avg=avg(ceph_osd_perf_apply_latency_seconds) by (cluster)
+ceph_cluster_osd_apply_latency_sec_min=min(ceph_osd_perf_apply_latency_seconds) by (cluster)
+ceph_cluster_osd_apply_latency_sec_max=max(ceph_osd_perf_apply_latency_seconds) by (cluster)
+# top10
+ceph_cluster_osd_perf_apply_latency_seconds_top10=topk(10,ceph_osd_perf_apply_latency_seconds) by (cluster)
+################
+# ceph_osd_pgs #
+################
+ceph_cluster_osd_pgs_sum=sum(ceph_osd_pgs) by (cluster)
+ceph_cluster_osd_pgs_avg=avg(ceph_osd_pgs) by (cluster)
+ceph_cluster_osd_pgs_max=max(ceph_osd_pgs) by (cluster)
+ceph_cluster_osd_pgs_min=min(ceph_osd_pgs) by (cluster)
+# top10
+ceph_cluster_osd_pgs_top10=topk(10,ceph_osd_pgs) by (cluster)
+#############################################
+# ceph_osd_leveldb_compact_queuemerge_count #
+#############################################
+ceph_cluster_osd_leveldb_compact_queuemerge_count_max=max(ceph_osd_leveldb_compact_queuemerge_count) by (cluster)
+ceph_cluster_osd_leveldb_compact_queuemerge_count_min=min(ceph_osd_leveldb_compact_queuemerge_count) by (cluster)
+ceph_cluster_osd_leveldb_compact_queuemerge_count_avg=avg(ceph_osd_leveldb_compact_queuemerge_count) by (cluster)
+ceph_cluster_osd_leveldb_compact_queuemerge_count_sum=sum(ceph_osd_leveldb_compact_queuemerge_count) by (cluster)
+# top10
+ceph_cluster_osd_leveldb_compact_queuemerge_count_top10=topk(10,ceph_osd_leveldb_compact_queuemerge_count) by (cluster)
+##################################
+# ceph_osd_leveldb_compact_count #
+##################################
+ceph_cluster_osd_leveldb_compact_count_avg=avg(ceph_osd_leveldb_compact_count) by (cluster)
+ceph_cluster_osd_leveldb_compact_count_sum=sum(ceph_osd_leveldb_compact_count) by (cluster)
+ceph_cluster_osd_leveldb_compact_count_min=min(ceph_osd_leveldb_compact_count) by (cluster)
+ceph_cluster_osd_leveldb_compact_count_max=max(ceph_osd_leveldb_compact_count) by (cluster)
+# top10
+ceph_cluster_osd_leveldb_compact_count_top10=topk(10,ceph_osd_leveldb_compact_count) by (cluster)
+#####################################
+# ceph_osd_leveldb_compact_queuelen #
+#####################################
+ceph_cluster_osd_leveldb_compact_queuelen_max=max(ceph_osd_leveldb_compact_queuelen) by (cluster)
+ceph_cluster_osd_leveldb_compact_queuelen_min=min(ceph_osd_leveldb_compact_queuelen) by (cluster)
+ceph_cluster_osd_leveldb_compact_queuelen_avg=avg(ceph_osd_leveldb_compact_queuelen) by (cluster)
+ceph_cluster_osd_leveldb_compact_queuelen_sum=sum(ceph_osd_leveldb_compact_queuelen) by (cluster)
+# top10
+ceph_cluster_osd_leveldb_compact_queuelen_top10=topk(10,ceph_osd_leveldb_compact_queuelen) by (cluster)
+########################
+# ceph_osd disk detail #
+########################
+ceph_cluster_avaiable_pct=ceph_cluster_available_bytes/ceph_cluster_capacity_bytes
+ceph_cluster_osd_avail_bytes_avg=avg(ceph_osd_avail_bytes) by (cluster)
+ceph_cluster_osd_avail_bytes_min=min(ceph_osd_avail_bytes) by (cluster)
+ceph_cluster_osd_avail_bytes_max=max(ceph_osd_avail_bytes) by (cluster)
+ceph_cluster_osd_used_bytes_avg=avg(ceph_osd_used_bytes) by (cluster)
+ceph_cluster_osd_used_bytes_min=min(ceph_osd_used_bytes) by (cluster)
+ceph_cluster_osd_used_bytes_max=max(ceph_osd_used_bytes) by (cluster)
+ceph_cluster_osd_utilization_avg=avg(ceph_osd_utilization) by (cluster)
+ceph_cluster_osd_utilization_min=min(ceph_osd_utilization) by (cluster)
+ceph_cluster_osd_utilization_max=max(ceph_osd_utilization) by (cluster)
+# top10
+ceph_cluster_osd_avail_bytes_top10=topk(10,ceph_osd_avail_bytes) by (cluster)
+ceph_cluster_osd_used_bytes_top10=topk(10,ceph_osd_used_bytes) by (cluster)
+ceph_cluster_osd_utilization_top10=topk(10,ceph_osd_utilization) by (cluster)
+#######################################################################
+
+
+

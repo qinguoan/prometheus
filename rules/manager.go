@@ -147,18 +147,20 @@ func (g *Group) run() {
 		return
 	}
 
-	iter := func() {
+	iter := func(t time.Time) {
 		iterationsScheduled.Inc()
 		if g.opts.SampleAppender.NeedsThrottling() {
 			iterationsSkipped.Inc()
 			return
 		}
 		start := time.Now()
-		g.Eval()
+
+		now := model.TimeFromUnix(t.Unix())
+		g.Eval(now)
 
 		iterationDuration.Observe(time.Since(start).Seconds())
 	}
-	iter()
+	iter(time.Now())
 
 	tick := time.NewTicker(g.interval)
 	defer tick.Stop()
@@ -171,8 +173,8 @@ func (g *Group) run() {
 			select {
 			case <-g.done:
 				return
-			case <-tick.C:
-				iter()
+			case t := <-tick.C:
+				iter(t)
 			}
 		}
 	}
@@ -240,10 +242,10 @@ func typeForRule(r Rule) ruleType {
 // Eval runs a single evaluation cycle in which all rules are evaluated in parallel.
 // In the future a single group will be evaluated sequentially to properly handle
 // rule dependency.
-func (g *Group) Eval() {
+func (g *Group) Eval(now model.Time) {
 	var (
-		now = model.Now()
-		wg  sync.WaitGroup
+		//now = model.Now()
+		wg sync.WaitGroup
 	)
 
 	for _, rule := range g.rules {
@@ -251,7 +253,7 @@ func (g *Group) Eval() {
 
 		wg.Add(1)
 		// BUG(julius): Look at fixing thundering herd.
-		go func(rule Rule) {
+		go func(rule Rule, now model.Time) {
 			defer wg.Done()
 
 			defer func(t time.Time) {
@@ -283,22 +285,22 @@ func (g *Group) Eval() {
 					switch err {
 					case local.ErrOutOfOrderSample:
 						numOutOfOrder++
-						log.With("sample", s).With("error", err).Debug("Rule evaluation result discarded")
+						log.With("sample", s).With("error", err).Warn("Rule evaluation result discarded")
 					case local.ErrDuplicateSampleForTimestamp:
 						numDuplicates++
 						log.With("sample", s).With("error", err).Debug("Rule evaluation result discarded")
 					default:
-						log.With("sample", s).With("error", err).Warn("Rule evaluation result discarded")
+						log.With("sample", s).With("error", err).Debug("Rule evaluation result discarded")
 					}
 				}
 			}
 			if numOutOfOrder > 0 {
-				log.With("numDropped", numOutOfOrder).Warn("Error on ingesting out-of-order result from rule evaluation")
+				log.With("numDropped", numOutOfOrder).Debug("Error on ingesting out-of-order result from rule evaluation")
 			}
 			if numDuplicates > 0 {
-				log.With("numDropped", numDuplicates).Warn("Error on ingesting results from rule evaluation with different value but same timestamp")
+				log.With("numDropped", numDuplicates).Debug("Error on ingesting results from rule evaluation with different value but same timestamp")
 			}
-		}(rule)
+		}(rule, now)
 	}
 	wg.Wait()
 }

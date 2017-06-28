@@ -49,6 +49,7 @@ const (
 	seriesTempFileSuffix = ".db.tmp"
 	seriesDirNameLen     = 2 // How many bytes of the fingerprint in dir name.
 	hintFileSuffix       = ".hint"
+	retentionLen         = 3
 
 	mappingsFileName      = "mappings.db"
 	mappingsTempFileName  = "mappings.db.tmp"
@@ -1095,7 +1096,7 @@ func (p *persistence) doRetention(fp model.Fingerprint, idx int) (totalchunks, r
 				return totalchunks, reduced, err
 			}
 
-			for iter, s := chunk.NewIterator(), 1; ; s++ {
+			for iter, s := chunk.NewIterator(), 1; iter.Scan(); s++ {
 				sample := iter.Value()
 				exclusive := sample.Timestamp.Sub(firstTime) >= 0
 				if exclusive {
@@ -1109,10 +1110,6 @@ func (p *persistence) doRetention(fp model.Fingerprint, idx int) (totalchunks, r
 						chunks = append(chunks, cs[:len(cs)-1]...)
 					}
 					header.C = cs[len(cs)-1]
-				}
-
-				if !iter.Scan() {
-					break
 				}
 			}
 		}
@@ -1456,20 +1453,22 @@ func (p *persistence) close() error {
 
 func (p *persistence) dirNameForFingerprint(fp model.Fingerprint) string {
 	fpStr := fp.String()
-	dir := filepath.Join(p.basePath, fpStr[0:seriesDirNameLen], fpStr[seriesDirNameLen:])
+	dir := filepath.Join(p.basePath, fpStr[0:seriesDirNameLen])
 	return dir
 }
 
 func (p *persistence) fileNameForFingerprint(fp model.Fingerprint, retention int) string {
 	fpStr := fp.String()
-	fileName := fmt.Sprintf("%s-%d%s", fpStr, retention, seriesFileSuffix)
-	return filepath.Join(p.basePath, fpStr[0:seriesDirNameLen], fpStr[seriesDirNameLen:], fileName)
+	fileNameFmt := fmt.Sprintf("-%%0%dd%s", retentionLen, seriesFileSuffix)
+	fileName := fmt.Sprintf(fileNameFmt, retention)
+	return filepath.Join(p.basePath, fpStr[0:seriesDirNameLen], fpStr[seriesDirNameLen:]+fileName)
 }
 
 func (p *persistence) tempFileNameForFingerprint(fp model.Fingerprint, retention int) string {
 	fpStr := fp.String()
-	fileName := fmt.Sprintf("%s-%d%s", fpStr, retention, seriesTempFileSuffix)
-	return filepath.Join(p.basePath, fpStr[0:seriesDirNameLen], fpStr[seriesDirNameLen:], fileName)
+	fileNameFmt := fmt.Sprintf("-%%0%dd%s", retentionLen, seriesTempFileSuffix)
+	fileName := fmt.Sprintf(fileNameFmt, retention)
+	return filepath.Join(p.basePath, fpStr[0:seriesDirNameLen], fpStr[seriesDirNameLen:]+fileName)
 }
 
 func (p *persistence) openChunkFileForWriting(fp model.Fingerprint, retention int) (*os.File, error) {

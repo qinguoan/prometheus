@@ -536,10 +536,10 @@ func (s *MemorySeriesStorage) QueryRange(_ context.Context, from, through model.
 }
 
 // QueryInstant implements Storage.
-func (s *MemorySeriesStorage) QueryInstant(_ context.Context, ts model.Time, matchers ...*metric.LabelMatcher) ([]SeriesIterator, error) {
+func (s *MemorySeriesStorage) QueryInstant(_ context.Context, ts model.Time, stalenessDelta time.Duration, matchers ...*metric.LabelMatcher) ([]SeriesIterator, error) {
 
 	interval := GetInterval(ts, model.Now())
-	from := ts.Add(-interval)
+	from := ts.Add(-stalenessDelta)
 	through := ts.Add(interval)
 
 	fpSeriesPairs, err := s.seriesForLabelMatchers(from, through, matchers...)
@@ -1214,6 +1214,7 @@ func (s *MemorySeriesStorage) cycleThroughMemoryFingerprints() chan model.Finger
 }
 
 func (s *MemorySeriesStorage) loop() {
+
 	checkpointTimer := time.NewTimer(s.checkpointInterval)
 
 	var dirtySeriesCount int64
@@ -1238,6 +1239,7 @@ func (s *MemorySeriesStorage) loop() {
 			case <-checkpointTimer.C:
 				// We clear this before the checkpoint so that dirtySeriesCount
 				// is an upper bound.
+				log.Info("start to check point series and heads")
 				atomic.StoreInt64(&dirtySeriesCount, 0)
 				s.dirtySeries.Set(0)
 				err := s.persistence.checkpointSeriesMapAndHeads(s.fpToSeries, s.fpLocker)

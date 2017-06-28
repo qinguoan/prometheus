@@ -141,7 +141,7 @@ func init() {
 		"The period at which the in-memory metrics and the chunks not yet persisted to series files are checkpointed.",
 	)
 	cfg.fs.IntVar(
-		&cfg.storage.CheckpointDirtySeriesLimit, "storage.local.checkpoint-dirty-series-limit", 5000,
+		&cfg.storage.CheckpointDirtySeriesLimit, "storage.local.checkpoint-dirty-series-limit", 200000,
 		"If approx. that many time series are in a state that would require a recovery operation after a crash, a checkpoint is triggered, even if the checkpoint interval hasn't passed yet. A recovery operation requires a disk seek. The default limit intends to keep the recovery time below 1min even on spinning disks. With SSD, recovery is much faster, so you might want to increase this value in that case to avoid overly frequent checkpoints.",
 	)
 	cfg.fs.Var(

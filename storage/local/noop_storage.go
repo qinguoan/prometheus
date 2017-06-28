@@ -14,6 +14,8 @@
 package local
 
 import (
+	"time"
+
 	"github.com/prometheus/common/model"
 	"golang.org/x/net/context"
 
@@ -64,7 +66,7 @@ func (s *NoopQuerier) QueryRange(ctx context.Context, from, through model.Time, 
 }
 
 // QueryInstant implements Querier.
-func (s *NoopQuerier) QueryInstant(ctx context.Context, ts model.Time, matchers ...*metric.LabelMatcher) ([]SeriesIterator, error) {
+func (s *NoopQuerier) QueryInstant(ctx context.Context, ts model.Time, stalenessDelta time.Duration, matchers ...*metric.LabelMatcher) ([]SeriesIterator, error) {
 	return nil, nil
 }
 

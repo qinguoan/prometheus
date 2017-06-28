@@ -1,5 +1,5 @@
 # Summary
-Auto downsample version of prometheus. It just for some one who want to save long term data in prometheus. Developed in past 10 days, can not make sure if any bug in the code. For now retention support is just hard coded in code(you can change it before compile).
+Auto downsample version of prometheus. It just for some one who want to save long term data in prometheus. 
 
 # Introduction
 * Fork from prometheusv1.5.2.
@@ -14,3 +14,4 @@ Auto downsample version of prometheus. It just for some one who want to save lon
 
 # Other
 * Any problem please feel free to contact me here or Email: qinguoan2007@hotmail.com.
+* Last update: 2017-06-28 with a lot of bugfix.

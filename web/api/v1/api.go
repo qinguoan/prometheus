@@ -204,6 +204,7 @@ func (api *API) queryRange(r *http.Request) (interface{}, *apiError) {
 		err := errors.New("end timestamp must not be before start time")
 		return nil, &apiError{errorBadData, err}
 	}
+
 	step := local.GetInterval(start, model.Now())
 	urlStep, err := parseDuration(r.FormValue("step"))
 	if err == nil && urlStep > step {
@@ -214,11 +215,6 @@ func (api *API) queryRange(r *http.Request) (interface{}, *apiError) {
 	// if err != nil {
 	// 	return nil, &apiError{errorBadData, err}
 	// }
-
-	if step <= 0 {
-		err := errors.New("zero or negative query resolution step widths are not accepted. Try a positive integer")
-		return nil, &apiError{errorBadData, err}
-	}
 
 	// For safety, limit the number of returned points per timeseries.
 	// This is sufficient for 60s resolution for a week or 1h resolution for a year.

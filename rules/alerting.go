@@ -38,6 +38,8 @@ const (
 	alertNameLabel model.LabelName = "alertname"
 	// AlertStateLabel is the label name indicating the state of an alert.
 	alertStateLabel model.LabelName = "alertstate"
+
+	magicSeparactor = "____"
 )
 
 // AlertState denotes the state of an active alert.
@@ -96,7 +98,7 @@ type AlertingRule struct {
 	mtx sync.Mutex
 	// A map of alerts which are currently active (Pending or Firing), keyed by
 	// the fingerprint of the labelset they correspond to.
-	active map[model.Fingerprint]*Alert
+	active map[string]*Alert
 }
 
 // NewAlertingRule constructs a new AlertingRule.
@@ -107,7 +109,7 @@ func NewAlertingRule(name string, vec promql.Expr, hold time.Duration, lbls, ann
 		holdDuration: hold,
 		labels:       lbls,
 		annotations:  anns,
-		active:       map[model.Fingerprint]*Alert{},
+		active:       map[string]*Alert{},
 	}
 }
 
@@ -163,7 +165,7 @@ func (r *AlertingRule) Eval(ctx context.Context, ts model.Time, engine *promql.E
 
 	// Create pending alerts for any new vector elements in the alert expression
 	// or update the expression value for existing elements.
-	resultFPs := map[model.Fingerprint]struct{}{}
+	resultFPs := map[string]struct{}{}
 
 	for _, smpl := range res {
 		// Provide the alert information to the template.
@@ -201,6 +203,9 @@ func (r *AlertingRule) Eval(ctx context.Context, ts model.Time, engine *promql.E
 			return model.LabelValue(result)
 		}
 
+		query := smpl.Metric.String()
+
+		// delete __name__, because this timeseries will save in prometheus.
 		delete(smpl.Metric, model.MetricNameLabel)
 		labels := make(model.LabelSet, len(smpl.Metric)+len(r.labels)+1)
 		for ln, lv := range smpl.Metric {
@@ -215,18 +220,20 @@ func (r *AlertingRule) Eval(ctx context.Context, ts model.Time, engine *promql.E
 		for an, av := range r.annotations {
 			annotations[an] = expand(av)
 		}
-		fp := smpl.Metric.Fingerprint()
-		resultFPs[fp] = struct{}{}
+		//fp := smpl.Metric.Fingerprint()
+		fp := model.Metric(labels).Fingerprint()
+		metric := r.Name() + magicSeparactor + fp.String() + magicSeparactor + query
+		resultFPs[metric] = struct{}{}
 
 		// Check whether we already have alerting state for the identifying label set.
 		// Update the last value and annotations if so, create a new alert entry otherwise.
-		if alert, ok := r.active[fp]; ok && alert.State != StateInactive {
+		if alert, ok := r.active[metric]; ok && alert.State != StateInactive {
 			alert.Value = smpl.Value
 			alert.Annotations = annotations
 			continue
 		}
 
-		r.active[fp] = &Alert{
+		r.active[metric] = &Alert{
 			Labels:      labels,
 			Annotations: annotations,
 			ActiveAt:    ts,
@@ -237,19 +244,38 @@ func (r *AlertingRule) Eval(ctx context.Context, ts model.Time, engine *promql.E
 
 	var vec model.Vector
 	// Check if any pending alerts should be removed or fire now. Write out alert timeseries.
-	for fp, a := range r.active {
-		if _, ok := resultFPs[fp]; !ok {
-			if a.State != StateInactive {
+	for metric, a := range r.active {
+		if _, ok := resultFPs[metric]; !ok {
+			// Alert recovery here.
+			if a.State == StateFiring {
+				// ms := strings.Split(metric, magicSeparactor)
+				// if len(ms) < 3 {
+				// 	return nil, fmt.Errorf("wrong metric: %s", metric)
+				// }
+
+				// query, err := engine.NewInstantQuery(ms[2], ts)
+				// if err != nil {
+				// 	return nil, err
+				// }
+
+				// res, err := query.Exec(ctx).Vector()
+				// if err != nil {
+				// 	return nil, err
+
+				// }
+
+				// if len(res) < 1 {
+				// 	log.Errorf("metric: %s can not find out last value, bye", metric)
+				// 	continue
+				// }
+				// a.Value = res[0].Value
 				vec = append(vec, r.sample(a, ts, false))
-			}
-			// If the alert was previously firing, keep it around for a given
-			// retention time so it is reported as resolved to the AlertManager.
-			if a.State == StatePending || (a.ResolvedAt != 0 && ts.Sub(a.ResolvedAt) > resolvedRetention) {
-				delete(r.active, fp)
-			}
-			if a.State != StateInactive {
 				a.State = StateInactive
 				a.ResolvedAt = ts
+				// If the alert was previously firing, keep it around for a given
+				// retention time so it is reported as resolved to the AlertManager.
+			} else {
+				delete(r.active, metric)
 			}
 			continue
 		}
@@ -257,9 +283,9 @@ func (r *AlertingRule) Eval(ctx context.Context, ts model.Time, engine *promql.E
 		if a.State == StatePending && ts.Sub(a.ActiveAt) >= r.holdDuration {
 			vec = append(vec, r.sample(a, ts, false))
 			a.State = StateFiring
+		} else {
+			vec = append(vec, r.sample(a, ts, true))
 		}
-
-		vec = append(vec, r.sample(a, ts, true))
 	}
 
 	return vec, nil

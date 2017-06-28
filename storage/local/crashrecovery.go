@@ -68,6 +68,7 @@ func (p *persistence) recoverFromCrash(fingerprintToSeries map[model.Fingerprint
 				return err
 			}
 			for _, fi := range fis {
+				log.Infof("dir: %s file: %s start to check", dirname, fi.Name())
 				fp, ok := p.sanitizeSeries(dirname, fi, fingerprintToSeries, fpm)
 				if ok {
 					fpsSeen[fp] = struct{}{}
@@ -217,9 +218,9 @@ func (p *persistence) sanitizeSeries(
 		}
 	}
 
-	if len(fi.Name()) != fpLen-seriesDirNameLen+len(seriesFileSuffix) ||
+	if len(fi.Name()) != fpLen-seriesDirNameLen+len(seriesFileSuffix)+retentionLen+1 ||
 		!strings.HasSuffix(fi.Name(), seriesFileSuffix) {
-		log.Warnf("Unexpected series file name %s.", filename)
+		log.Warnf("Unexpected series file name %s .", filename)
 		purge()
 		return fp, false
 	}
@@ -250,7 +251,7 @@ func (p *persistence) sanitizeSeries(
 		}
 	}
 	if chunksInFile == 0 {
-		log.Warnf("No chunks left in file %s.", filename)
+		log.Errorf("No chunks left in file %s.", filename)
 		purge()
 		return fp, false
 	}
@@ -286,7 +287,7 @@ func (p *persistence) sanitizeSeries(
 				purge()
 				return fp, false
 			}
-			log.Warnf(
+			log.Errorf(
 				"Treating recovered metric %v, fingerprint %v, as freshly unarchived, with %d chunks in series file.",
 				s.metric, fp, len(cds),
 			)
@@ -348,7 +349,7 @@ func (p *persistence) sanitizeSeries(
 			}
 		}
 		if keepIdx == -1 {
-			log.Warnf(
+			log.Infof(
 				"Recovered metric %v, fingerprint %v: all %d chunks recovered from series file.",
 				s.metric, fp, chunksInFile,
 			)
@@ -358,7 +359,7 @@ func (p *persistence) sanitizeSeries(
 			s.headChunkClosed = true
 			return fp, true
 		}
-		log.Warnf(
+		log.Infof(
 			"Recovered metric %v, fingerprint %v: recovered %d chunks from series file, recovered %d chunks from checkpoint.",
 			s.metric, fp, chunksInFile, len(s.chunkDescs)-keepIdx,
 		)
@@ -382,7 +383,7 @@ func (p *persistence) sanitizeSeries(
 		return fp, false
 	}
 	if metric == nil {
-		log.Warnf(
+		log.Errorf(
 			"Fingerprint %v assumed archived but couldn't be found in archived index.",
 			fp,
 		)

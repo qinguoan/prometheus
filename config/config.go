@@ -118,6 +118,11 @@ var (
 		Scheme:       "http",
 	}
 
+	DefaultSyreoEtcdConfig = SyreoEtcdConfig{
+		Port:     9129,
+		Interval: model.Duration(30 * time.Second),
+	}
+
 	// DefaultServersetSDConfig is the default Serverset SD configuration.
 	DefaultServersetSDConfig = ServersetSDConfig{
 		Timeout: model.Duration(10 * time.Second),
@@ -428,6 +433,8 @@ type ServiceDiscoveryConfig struct {
 	DNSSDConfigs []*DNSSDConfig `yaml:"dns_sd_configs,omitempty"`
 	// List of file service discovery configurations.
 	FileSDConfigs []*FileSDConfig `yaml:"file_sd_configs,omitempty"`
+	// List of syreo nodes.
+	SyreoEtcdConfigs []*SyreoEtcdConfig `yaml:"syreo_etcd_configs,omitempty"`
 	// List of Consul service discovery configurations.
 	ConsulSDConfigs []*ConsulSDConfig `yaml:"consul_sd_configs,omitempty"`
 	// List of Serverset service discovery configurations.
@@ -807,6 +814,32 @@ func (c *FileSDConfig) UnmarshalYAML(unmarshal func(interface{}) error) error {
 			return fmt.Errorf("path name %q is not valid for file discovery", name)
 		}
 	}
+	return nil
+}
+
+type SyreoEtcdConfig struct {
+	Server   string                 `yaml:"etcd_server"`
+	Port     int                    `yaml:"scrape_port"`
+	Labels   model.LabelSet         `yaml:"extra_labels"`
+	Interval model.Duration         `yaml:"refresh_interval"`
+	XXX      map[string]interface{} `yaml:",inline"`
+}
+
+// UnmarshalYAML implements the yaml.Unmarshaler interface.
+func (c *SyreoEtcdConfig) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	*c = DefaultSyreoEtcdConfig
+	type plain SyreoEtcdConfig
+	err := unmarshal((*plain)(c))
+	if err != nil {
+		return err
+	}
+	if err := checkOverflow(c.XXX, "syreo_node_config"); err != nil {
+		return err
+	}
+	if strings.TrimSpace(c.Server) == "" {
+		return fmt.Errorf("Syreo Node configuration requires a master server address")
+	}
+
 	return nil
 }
 

@@ -1,0 +1,23 @@
+[Unit]
+Description=Prometheus Monitor Server
+Documentation=http://github.com/qinguoan/prometheus
+
+[Service]
+EnvironmentFile=/etc/prometheus/prometheus
+ExecStart=/opt/prometheus/bin/prometheus \
+        $QUERY_MAX_CONCURRENCY \
+        $MAX_CHUNKS_PERSIST \
+        $INDEX_CACHESIZE_FP_TO_METRIC \
+        $INDEX_CACHESIZE_FP_TO_TIMERANGE \
+        $INDEX_CACHESIZE_NAME_TO_VALUES \
+        $INDEX_CACHESIZE_LABELPAIR_TO_FP \
+        $LOCAL_MEMORY_CHUNKS \
+        $CONFIG_FILE \
+        $LOG_LEVEL \
+        $DATA_PATH \
+        $EXTERNAL_URL \
+        $LISTEN_ADDRESS
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

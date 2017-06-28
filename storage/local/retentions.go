@@ -180,5 +180,5 @@ func nextInterval(idx int) time.Duration {
 
 func init() {
 
-	DefaultRetentionList, _ = ParseRetentionDefs(TestRetentions)
+	DefaultRetentionList, _ = ParseRetentionDefs(DefaultRetetions)
 }
